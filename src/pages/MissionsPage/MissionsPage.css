@@ -1,0 +1,93 @@
+.flex{
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.flex-1 {
+	flex: 1 1 0%;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.flex-initial	{
+  flex: 0 1 auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+
+.flex-left-20 {
+  width: 20%;
+  text-align: left;
+}
+
+.flex-left-80 {
+  width: 80%;
+  text-align: left;
+}
+
+.flex-right-20 {
+  width: 20%;
+  text-align: right;
+}
+
+.flex-right-80 {
+  width: 80%;
+  text-align: right;
+}
+
+.p-timeline {
+  position: relative;
+  top: 1rem;
+}
+
+.p-timeline-event {
+  min-height: 50px;
+}
+
+.p-timeline-event-marker {
+  border: 2px solid var(--tg-theme-accent-text-color);
+  background-color: transparent;
+}
+
+.p-timeline-event-marker-disabled {
+  border: 2px solid var(--tg-theme-hint-color);
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  opacity: 0.4;
+}
+
+.p-component {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature-settings, normal);
+  font-size: 0.75rem;
+  font-weight: normal;
+}
+
+div.p-timeline.p-component.p-timeline-left.p-timeline-vertical > div > div.p-timeline-event-opposite {
+  flex: 0;
+  padding: 0;
+}
+
+div.p-timeline.p-component.p-timeline-left.p-timeline-vertical > div > div.p-timeline-event-content {
+  position: relative;
+  top: -0.7rem;
+  padding-right: 0px;
+}
+
+.app.disabled {
+  color: var(--tg-theme-hint-color) !important;
+  border-color: var(--tg-theme-hint-color) !important;
+}
+
+.app.default {
+  color: var(--tg-theme-accent-text-color) !important;
+  border-color: var(--tg-theme-accent-text-color) !important;
+}

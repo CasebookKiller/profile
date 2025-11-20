@@ -1,0 +1,37 @@
+.app.theme-text-color {
+  color: var(--app-theme-text-color);
+}
+
+.app.placeholder {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 32px;
+}
+
+.app.placeholder > dl {
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.app.placeholder > dl > dt {
+  font-size: var(--tgui--title3--font_size);
+  line-height: var(--tgui--title3--line_height);
+  font-weight: var(--tgui--font_weight--accent2);
+  margin: 0;
+  font-family: var(--tgui--font-family);
+}
+
+.app.placeholder > dl > dd {
+  margin-top: 8px;
+  color: var(--tgui--hint_color);
+  font-size: var(--tgui--text--font_size);
+  line-height: var(--tgui--text--line_height);
+  font-weight: var(--tgui--font_weight--accent3);
+  margin: 0;
+  font-family: var(--tgui--font-family);
+}
