@@ -1,9 +1,9 @@
 {
-  "name": "tmajs-prime-reactjs-template",
+  "name": "profile",
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "homepage": "https://casebookkiller.github.io/tmajs-prime-reactjs-template",
+  "homepage": "https://casebookkiller.github.io/profile",
   "scripts": {
     "deploy": "gh-pages -d dist",
     "dev": "vite",
