@@ -14,7 +14,7 @@ export function fetchBot(
   onSuccess: (data: any) => void,
   onError: (error: any) => void
 ) {
-  console.log('method: ', method);
+  
   fetch(
     `https://api.telegram.org/bot${import.meta.env.VITE_BOT_TOKEN}/` + method, {
     method: 'POST',
@@ -190,4 +190,152 @@ export function sendPhoto(
       }
     );
   });
+}
+
+
+/**
+ * ############################################################################
+ * НОВЫЕ ФУНКЦИИ, ПЕРЕСМОТРЕТЬ ПОРЯДОК
+ * ############################################################################
+ */
+
+/**
+ * Объединить функции из penalty
+ */
+
+/**
+ * Преобразование FormData в JSON
+ * @param formData 
+ * @returns {string} JSON строка
+ */
+export function formDataToJson (formData: FormData) {
+  return JSON.stringify(Object.fromEntries(formData));
+}
+
+/*
+getUserProfilePhotos
+--------------------
+Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
+
+Parameter                   Type                    Required    Description
+---------------------------------------------------------------------------
+user_id                     Integer                 Yes         Unique identifier of the target user
+offset                      Integer                 Optional    Sequential number of the first photo to be returned. By default, all photos are returned.
+limit                       Integer                 Optional    Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+*/
+
+export function getUserProfilePhotos(
+  request: string | FormData
+) {
+  return new Promise(function (resolve, reject) {
+    if (typeof request === 'string') {
+      fetchBot(
+        'getUserProfilePhotos',
+        request,
+        function (result) {
+          resolve(result)
+        },
+        function (error) {
+          reject(error)
+        }
+      );
+    } else {
+      fetchBotFormData(
+        'getUserProfilePhotos',
+        request,
+        function (result) {
+          resolve(result)
+        },
+        function (error) {
+          reject(error)
+        }
+      );
+    }
+  });
+}
+
+/*
+getFile
+-------
+Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+
+Parameter                   Type                    Required    Description
+---------------------------------------------------------------------------
+file_id                     String                  Yes         File identifier to get information about
+
+Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
+*/
+
+export function getFile(
+  request: string | FormData
+) {
+  return new Promise(function (resolve, reject) {
+    if (typeof request === 'string') {
+      fetchBot(
+        'getFile',
+        request,
+        function (result) {
+          resolve(result)
+        },
+        function (error) {
+          reject(error)
+        }
+      );
+    } else {
+      fetchBotFormData(
+        'getFile',
+        request,
+        function (result) {
+          resolve(result)
+        },
+        function (error) {
+          reject(error)
+        }
+      );
+    }
+  });
+}
+
+/**
+ * Получение blob файла по идентификатору
+ * @param {string} fileId 
+ * @returns {Blob}
+ */
+export async function getFileAsBlob(fileId: string): Promise<Blob | null> {
+  const botToken = import.meta.env.VITE_BOT_TOKEN;
+  try {
+    // 1. Получаем file_path через метод getFile
+    const getFileResponse = await fetch(
+      `https://api.telegram.org/bot${botToken}/getFile?file_id=${fileId}`,
+      {
+        mode: 'no-cors',
+        method: 'get'
+      }
+    );
+
+    const getFileData = await getFileResponse.json();
+
+    if (!getFileData.ok) {
+      console.error('Ошибка при получении file_path:', getFileData);
+      return null;
+    }
+
+    const filePath = getFileData.result.file_path;
+
+    // 2. Формируем URL для скачивания файла
+    const fileUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
+
+    // 3. Загружаем файл и преобразуем в Blob
+    const downloadResponse = await fetch(fileUrl);
+    if (!downloadResponse.ok) {
+      console.error('Ошибка при скачивании файла:', downloadResponse.statusText);
+      return null;
+    }
+
+    const blob = await downloadResponse.blob();
+    return blob;
+  } catch (error) {
+    console.error('Произошла ошибка:', error);
+    return null;
+  }
 }

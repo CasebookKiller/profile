@@ -1,3 +1,5 @@
+const template_panels = import.meta.env.VITE_TEMPLATE_PANELS === 'true' ? true : false;
+
 import * as packageJson from '../../../package.json';
 const version = packageJson.version;
 
@@ -12,14 +14,22 @@ import { Panel } from 'primereact/panel';
 import { Chip } from 'primereact/chip';
 
 import tonSvg from './ton.svg';
+import { Profile } from '@/components/Profile/Profile';
 
 export const IndexPage: FC = () => {
-  const LP = retrieveLaunchParams();
-  console.log('LaunchParams: ', LP);
+  const LP = retrieveLaunchParams(); console.log('LaunchParams: ', LP);
+  
   const tgWebAppData = LP?.tgWebAppData;
   const ID = tgWebAppData;
-  const SP = ID?.start_param
-  console.log('start_param: ', SP);
+  const SP = ID?.start_param; console.log('start_param: ', SP);
+  
+  const username = ID?.user?.username;
+  const firstName = ID?.user?.first_name;
+  const lastName = ID?.user?.last_name;
+
+  const name = lastName && firstName && `${lastName} ${firstName}` || username || '';
+  console.log('name: ', name);
+
   const [userId] = useState<string>(ID?.user?.id.toString() || '');
 
   return (
@@ -27,40 +37,49 @@ export const IndexPage: FC = () => {
       <Page back={false}>
 
       <div className='app p-0'/>
-      <Panel
-          className='shadow-5 mx-1'
-          header={'Особенности'}
-          footer={'Вы можете воспользоваться этими страницами, чтобы узнать больше о функциях, предоставляемых мини-приложениями Telegram и другими полезными проектами'}
-        >
-          {/*<div>{"==="+location.pathname+'==='}</div>*/}
-          <Link to='/ton-connect'>
-            <div className='flex flex-wrap app p-2 align-items-center gap-4'>
-              <img
-                className='w-2-5rem shadow-2 flex-shrink-0 border-round'
-                style={{ backgroundColor: '#007AFF' }}
-                src={tonSvg}
-                alt='TON Connect'
-              />
-              <div className='flex-1 flex flex-column gap-1 xl:mr-8'>
+      <Profile
+        name={name}
+        username={username}
+        userId={userId}
+        bio={'Судебный юрист с 25.09.2000. Сопровождение споров из неисполнения договорных обязательств, дел о банкротстве, об оспаривании действий органов государственной власти и многих других.'}
+      />
+
+      {template_panels && <div className='app p-0'/>}
+      {template_panels && <Panel
+        className='shadow-5 mx-1'
+        header={'Особенности'}
+        footer={'Вы можете воспользоваться этими страницами, чтобы узнать больше о функциях, предоставляемых мини-приложениями Telegram и другими полезными проектами'}
+      >
+        <Link to='/ton-connect'>
+          <div className='flex flex-wrap app p-2 align-items-center gap-4'>
+            <img
+              className='w-2-5rem shadow-2 flex-shrink-0 border-round'
+              style={{ 
+                backgroundColor: 'var(--tg-theme-accent-text-color)'
+              }}
+              src={tonSvg}
+              alt='TON Connect'
+            />
+            <div className='flex-1 flex flex-column gap-1 xl:mr-8'>
+              <span
+                className='app font-size-subheading'
+              >TON Connect</span>
+              <div className='flex align-items-center gap-2'>
+                {/*<i className="pi pi-tag text-sm"></i>*/}
                 <span
-                  className='app font-size-subheading'
-                >TON Connect</span>
-                <div className='flex align-items-center gap-2'>
-                  {/*<i className="pi pi-tag text-sm"></i>*/}
-                  <span
-                    className='app font-size theme-hint-color font-weight-content'
-                  >
-                    Подключите свой кошелек TON
-                  </span>
-                </div>
+                  className='app font-size theme-hint-color font-weight-content'
+                >
+                  Подключите свой кошелек TON
+                </span>
               </div>
-              {/*<span className="font-bold text-900">$65</span>*/}
             </div>
-          </Link>
-        </Panel>
+            {/*<span className="font-bold text-900">$65</span>*/}
+          </div>
+        </Link>
+      </Panel>}
       
-      <div className='app p-0'/>
-      <Panel
+      {template_panels && <div className='app p-0'/>}
+      {template_panels && <Panel
           className='shadow-5 mx-1'
           header={'Данные о запуске приложения'}
           footer={'Эти страницы помогают разработчикам узнать больше о текущей информации о запуске'}
@@ -119,10 +138,10 @@ export const IndexPage: FC = () => {
               </div>
             </div>
           </Link>
-        </Panel>
+        </Panel>}
       
-      <div className='app p-0'/>
-      <Panel
+      {template_panels && <div className='app p-0'/>}
+      {template_panels && <Panel
           className='shadow-5 mx-1'
           header='База данных и задания'
           footer='Этот раздел помогает разработчикам настроить подключение supabase к своему мини-приложению и организовать подписку на чаты и каналы'
@@ -163,7 +182,8 @@ export const IndexPage: FC = () => {
               </div>
             </div>
           </Link>
-        </Panel>
+        </Panel>}
+
         <div
           className='my-5 mx-2 app theme-hint-color theme-bg-secondary text-xs'
         >

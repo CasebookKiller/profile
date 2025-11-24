@@ -70,9 +70,9 @@ if (import.meta.env.DEV) {
           ['chat_type', 'sender'],
           ['user', JSON.stringify({
             id: Number(import.meta.env.VITE_MOCK_USER_ID) || 99281932,
-            first_name: 'Ivan',
-            last_name: 'Petrov',
-            username: 'petrov',
+            first_name: import.meta.env.VITE_MOCK_FIRST_NAME || 'Ivan',
+            last_name: import.meta.env.VITE_MOCK_LAST_NAME || 'Petrov',
+            username: import.meta.env.VITE_MOCK_USERNAME || 'petrov',
             language_code: 'ru',
             is_premium: true,
             allows_write_to_pm: true,

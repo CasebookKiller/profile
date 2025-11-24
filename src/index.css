@@ -136,3 +136,197 @@ body {
   color: var(--tg-theme-hint-color)!important;
   fill: var(--tg-theme-hint-color)!important;
 }
+
+.p-panel .p-panel-header {
+  border: 1px solid var(--tg-theme-hint-color)/*#424b57*/;
+  padding: 1.25rem;
+  background: var(--tg-theme-section-bg-color);
+  color: var(--tg-theme-accent-text-color);
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  /** */
+  font-weight: var(--app-font-weight-header);
+  font-size: var(--app-font-size);
+}
+
+.p-panel .p-panel-content {
+  padding: 4px 22px/*1.25rem*/;
+  border: 1px solid var(--tg-theme-hint-color)/*#424b57*/;
+  background: var(--tg-theme-section-bg-color)/*#1f2937*/;
+  color: var(--tg-theme-accent-text-color);
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-top: 0 none;
+  /** */
+  font-weight: var(--app-font-weight-content);
+  font-size: var(--app-font-size);
+}
+
+.p-panel .p-panel-footer {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--tg-theme-hint-color)/*#424b57*/;
+  background: var(--tg-theme-secondary-bg-color)/*#1f2937*/;
+  color: var(--tg-theme-accent-text-color);
+  border-top: 0 none;
+  /** */
+  font-weight: var(--app-font-weight-content);
+  font-size: var(--app-font-size);
+}
+
+.p-card {
+  border: 1px solid var(--tg-theme-hint-color)/*#424b57*/;
+  background: var(--tg-theme-section-bg-color);
+  color: var(--tg-theme-accent-text-color);
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  /** */
+  font-weight: var(--app-font-weight-header);
+  font-size: var(--app-font-size);
+}
+
+.p-checkbox {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.p-checkbox .p-checkbox-box {
+  width: 20px;
+  height: 20px;
+}
+
+.p-checkbox.p-highlight .p-checkbox-box {
+  border-color: var(--app-theme-link-color);
+  background: var(--app-theme-link-color);
+}
+
+.p-disabled, .p-disabled * {
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+  color: var(--app-theme-text-color);
+}
+
+.p-button {
+    /*color: var(--tg-theme-section-bg-color);
+    background: var(--tg-theme-accent-text-color);
+    border: 1px solid var(--tg-theme-accent-text-color);
+    background-color: var(--tg-theme-accent-text-color);*/
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+}
+
+.p-card-header img {
+  width: auto;
+  border-radius: 5%;
+}
+
+.app.font-size {
+  font-size: var(--app-font-size);
+}
+
+.app.font-size-2 {
+  font-size: var(--app-font-size-2);
+}
+
+.app.font-size-subheading {
+  font-size: var(--app-font-size-subheading);
+}
+
+.app.font-size-header {
+  font-size: var(--app-font-size-header);
+}
+
+.app.font-weight-content {
+  font-weight: var(--app-font-weight-content);
+}
+
+.app.font-weight-header {
+  font-weight: var(--app-font-weight-header);
+}
+
+.app.title-font-size {
+  font-size: var(--app-title-font-size);
+}
+
+.app.title-line-height {
+  line-height: var(--app-line-height);
+}
+
+.app.line-height {
+  line-height: var(--app-line-height);
+}
+
+.app.line-height-2 {
+  line-height: var(--app-line-height-2);
+}
+
+/** 
+ * theme colors
+ */
+.app.theme-text-color {
+  color: var(--app-theme-text-color);
+}
+
+.app.theme-hint-color {
+  color: var(--app-theme-hint-color);
+}
+
+.app.theme-bg-secondary {
+  background: var(--app-theme-secondary-bg-color);
+}
+
+.text-2xs {
+  font-size: .5rem;
+}
+
+.w-2-5rem {
+  width: 2.5rem !important;
+}
+
+.app.p-0 {
+  padding: 0.25rem 0rem !important;
+}
+
+.app.p-1 {
+  padding: 0.5rem 0rem !important;
+}
+
+.app.p-2 {
+  padding: 0.75rem 0rem !important;
+}
+
+.app.wrap {
+  word-break: break-word;
+}
+
+.app.nowrap {
+  white-space: nowrap;
+}
+
+.app.overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app.item-border-bottom {
+  border-bottom: 1px solid #ffffff1a/*#424b57*/;
+}
+
+.app.cursor-pointer {
+  cursor: var(--app-cursor-pointer);
+}
+
+.app.text-readonly {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.app.theme-bg-link-color {
+  color: var(--app-theme-link-color);
+}
