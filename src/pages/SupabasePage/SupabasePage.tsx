@@ -32,7 +32,7 @@ export const SupabasePage: FC = () => {
     const result: PostgrestSingleResponse<TGID[]> = await SBase
       .from('ids')
       .select()
-      .lt('id', 10); //первые 10 записей
+      .lt('id', 30); //первые 30 записей
 
     console.log('%cids: %o', `color: firebrick; background-color: white`, result.data);  
     

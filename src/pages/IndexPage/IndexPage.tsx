@@ -27,10 +27,12 @@ export const IndexPage: FC = () => {
   const firstName = ID?.user?.first_name;
   const lastName = ID?.user?.last_name;
 
+  const tgid = ID?.user?.id.toString();
+
   const name = lastName && firstName && `${lastName} ${firstName}` || username || '';
   console.log('name: ', name);
 
-  const [userId] = useState<string>(ID?.user?.id.toString() || '');
+  const [userId] = useState<string>(tgid || '');
 
   return (
     <React.Fragment>

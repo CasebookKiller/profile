@@ -65,7 +65,8 @@ export const Profile: FC<ProfileProps> = (props) => {
   );
 
 
-  let formData = new FormData(); 
+  let formData = new FormData();
+  console.log(props.userId);
   formData.append('user_id', ID?.user?.id.toString() || '');
 
 /** ******************** */
@@ -182,6 +183,7 @@ export const Profile: FC<ProfileProps> = (props) => {
   getUserProfilePhotos(
     formDataToJson(formData)
   ).then(async (result: any) => {
+    console.log('result: ', result);
     if (result?.payload?.ok) {
       const total_count = result?.payload?.result?.total_count;
       const photos = result?.payload?.result?.photos;
