@@ -1,0 +1,15 @@
+:root {
+  --app-accent-color-rgb: var(--tg-theme-accent-text-color);
+  --app-accent-color-rgba: rgba(var(--tg-theme-accent-text-color), 0.2);
+}
+
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0 rgba(var(--app-accent-color-rgb), 0.2);
+  border-color: var(--app-accent-color-rgb);
+}
+
+.p-inputtext:enabled:hover {
+  border-color: var(--app-accent-color-rgb);
+}

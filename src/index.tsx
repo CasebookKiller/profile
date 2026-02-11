@@ -2,6 +2,7 @@ const erudaon = false;
 
 import 'primereact/resources/themes/lara-dark-cyan/theme.css';
 import 'primeflex/primeflex.css';
+import 'primeflex/themes/primeone-dark.css';
 import 'primeicons/primeicons.css';
 
 // Сначала включите стили пользовательского интерфейса Telegram, чтобы наш код мог переопределять CSS пакета.

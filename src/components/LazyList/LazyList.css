@@ -1,0 +1,27 @@
+.container {
+  margin-top: 1rem;
+  display: block;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.list-group {
+  background-color: var(--tg-theme-section-bg-color);
+  border-radius: 5px;
+  overflow-y: hidden;
+}
+
+.list-group-item {
+  padding: 1rem;
+  font-size: 1em;
+  transition: all .3s ease-out;
+}
+
+.list-group-item:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+ul#ullist.p-datascroller-list {
+  padding: 0;
+}

@@ -1,0 +1,21 @@
+.BondsScroller ::-webkit-scrollbar {
+  width: 5px; /* Ширина всей полосы */
+}
+
+.BondsScroller ::-webkit-scrollbar-track {
+  background: var(--tg-theme-secondary-bg-color); /* Цвет фона трека */
+}
+
+.BondsScroller ::-webkit-scrollbar-thumb {
+  height: 30px; /* Высота бегунка */
+  min-height: 30px; /* Минимальная высота бегунка */
+  max-height: none; /* Нет максимального ограничения */
+  background: var(--tg-theme-hint-color); /* Цвет бегунка */
+  border-radius: 5px; /* Радиус скругления */
+}
+
+/* Анимация плавного появления бегунка */
+.BondsScroller ::-webkit-scrollbar-thumb:hover {
+  background: var(--tg-theme-accent-text-color); /* Темнее при наведении */
+}
+

@@ -39,8 +39,8 @@ export const SupabasePage: FC = () => {
     setIds(result.data||[]);
   }
 
-    async function getTGId(tgid: string) {
-    const result: PostgrestSingleResponse<TGID[]> = await SBase.from("ids").select().eq('tgid', tgid);
+  async function getRow(tgid: string) {
+    const result: PostgrestSingleResponse<TGID[]> = await SBase.from('ids').select().eq('tgid', tgid);
     console.log('%cid: %o', `color: firebrick; background-color: white`, result.data);  
     return result.data;
   }
@@ -57,7 +57,7 @@ export const SupabasePage: FC = () => {
 
   useEffect(() => {
     if (ID?.user?.id) {
-      getTGId(ID?.user?.id.toString()).then((result) => {
+      getRow(ID?.user?.id.toString()).then((result) => {
         if (result && result.length > 0) {
           if (result[0].username === null) {
             updateTGUsername(ID?.user?.id.toString() || '', ID?.user?.username || '').then((result) => {

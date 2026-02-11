@@ -78,7 +78,7 @@ if (import.meta.env.DEV) {
             allows_write_to_pm: true,
           })],
         ]).toString()],
-        ['tgWebAppVersion', '9.1'],
+        ['tgWebAppVersion', '9.3'],
         ['tgWebAppPlatform', 'tdesktop'],
       ]),
     });

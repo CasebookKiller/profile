@@ -25,3 +25,7 @@
 .profile.p-inputtext:enabled:hover {
   border-color: var(--tg-theme-accent-text-color);
 }
+
+span.profile {
+  color: var(--tg-theme-accent-text-color);
+}

@@ -1,8 +1,8 @@
-import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Route, Routes, HashRouter} from 'react-router-dom';
 import { retrieveLaunchParams } from '@tma.js/sdk-react';
 
 import { routes } from '@/navigation/routes.tsx';
-import React from 'react';
 
 export function App() {
   const LP = retrieveLaunchParams(); console.log('LaunchParams: ', LP);
@@ -22,6 +22,7 @@ export function App() {
           </Routes>
         </HashRouter>
       </div>}
+      
     </React.Fragment>
   );
 }

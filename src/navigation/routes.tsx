@@ -8,6 +8,10 @@ import { TONConnectPage } from '@/pages/TONConnectPage/TONConnectPage';
 import { MissionsPage } from '@/pages/MissionsPage/MissionsPage';
 import { SupabasePage } from '@/pages/SupabasePage/SupabasePage';
 
+import { CatalogPage } from '@/pages/CatalogPage/CatalogPage';
+import { SettingsPage } from '@/pages/SettingsPage/SettingsPage';
+import { BondDetailPage } from '@/pages/BondDetailPage/BondDetailPage';
+
 export interface Route {
   path: string;
   Component?: ComponentType | null;
@@ -41,6 +45,10 @@ const tonconnect: Route = { path: '/ton-connect', Component: TONConnectPage, tit
 const missions: Route = { path: '/missions', Component: MissionsPage, title: 'Задания' };
 const supabase: Route = { path: '/supabase', Component: SupabasePage, title: 'База данных' };
 
+const catalog: Route = { path: '/catalog', Component: CatalogPage, title: 'Каталог' };
+const bond: Route = { path: '/catalog/bond/:classcode/:isin', Component: BondDetailPage, title: 'Каталог' };
+const settings: Route = { path: '/settings', Component: SettingsPage, title: 'Настройки' };
+
 export const routes: Route[] = [];
 
 routes.push(
@@ -50,5 +58,8 @@ routes.push(
   launchparams,
   tonconnect,
   missions,
-  supabase
+  supabase,
+  catalog,
+  bond,
+  settings
 );

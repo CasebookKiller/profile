@@ -133,9 +133,12 @@ export function fetchBot(
   onSuccess: (data: any) => void,
   onError: (error: any) => void
 ) {
+  const token = import.meta.env.VITE_BOT_TOKEN;
+  console.log('token: ', token);
+  console.log('request: ', request);
   console.log('method: ', method);
   fetch(
-    `https://api.telegram.org/bot${import.meta.env.VITE_BOT_TOKEN}/` + method, {
+    `https://api.telegram.org/bot${token}/` + method, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
@@ -144,6 +147,7 @@ export function fetchBot(
     body: request
   })
   .then(response => {
+    console.log('response: ', response);
     return response.json();
   })
   .then(response => {
@@ -946,25 +950,25 @@ export function deleteMessage(
   chat_id: number,
   message_id: number
 ) {
-  /*
-  deleteMessage
-  ---------------------------------------------------------------------------------------------
-  Используйте этот метод для удаления сообщений, в том числе служебных, со следующими ограничениями:
-  - Сообщение может быть удалено, только если оно было отправлено менее 48 часов назад.
-  - Служебные сообщения о создании супергруппы, канала или темы на форуме удалить невозможно.
-  - Сообщение dice в приватном чате можно удалить, только если оно было отправлено более 24 часов назад.
-  - Боты могут удалять исходящие сообщения в приватных чатах, группах и супергруппах.
-  - Боты могут удалять входящие сообщения в личных чатах.
-  - Боты с разрешением can_post_messages могут удалять исходящие сообщения в каналах.
-  - Если бот является администратором группы, он может удалить любое сообщение в ней.
-  - Если у бота есть разрешение can_delete_messages в супергруппе или канале, он может удалить любое сообщение в них.
-  При успешном выполнении возвращает True.
+/*
+deleteMessage
+---------------------------------------------------------------------------------------------
+Используйте этот метод для удаления сообщений, в том числе служебных, со следующими ограничениями:
+- Сообщение может быть удалено, только если оно было отправлено менее 48 часов назад.
+- Служебные сообщения о создании супергруппы, канала или темы на форуме удалить невозможно.
+- Сообщение dice в приватном чате можно удалить, только если оно было отправлено более 24 часов назад.
+- Боты могут удалять исходящие сообщения в приватных чатах, группах и супергруппах.
+- Боты могут удалять входящие сообщения в личных чатах.
+- Боты с разрешением can_post_messages могут удалять исходящие сообщения в каналах.
+- Если бот является администратором группы, он может удалить любое сообщение в ней.
+- Если у бота есть разрешение can_delete_messages в супергруппе или канале, он может удалить любое сообщение в них.
+При успешном выполнении возвращает True.
 
-  Параметр    Тип                 Обязательный  Описание
-  ---------------------------------------------------------------------------------------------
-  chat_id     Integer или String  Да            Уникальный идентификатор целевого чата или имя пользователя целевого канала (в формате @channelusername)
-  message_id  Integer             Да            Идентификатор сообщения, которое требуется удалить.
-  */
+Параметр    Тип                 Обязательный  Описание
+---------------------------------------------------------------------------------------------
+chat_id     Integer или String  Да            Уникальный идентификатор целевого чата или имя пользователя целевого канала (в формате @channelusername)
+message_id  Integer             Да            Идентификатор сообщения, которое требуется удалить.
+*/
   const FD = new FormData();
   FD.append('chat_id', chat_id.toString());
   FD.append('message_id', message_id.toString());
@@ -978,3 +982,164 @@ export function deleteMessage(
     console.log(error);
   });
 }
+
+
+export function getChat(
+  chat_id: string | number,
+  onSuccess?: (data: any) => void, // обратный вызов при успешном завершении
+  onError?: (error: any) => void   // обратный вызов при ошибке
+) {
+/*
+getChat
+Используйте этот метод для получения актуальной информации о чате. В случае успешного завершения возвращает объект ChatFullInfo.
+
+Параметр    Тип                 Обязательный  Описание
+---------------------------------------------------------------------------------------------
+chat_id     Integer или String  Да            Уникальный идентификатор целевого чата или имя пользователя целевой супергруппы или канала (в формате @channelusername)
+
+*/
+  const FD = new FormData();
+  FD.append('chat_id', chat_id.toString());
+   
+  botMethod(
+    'getChat',
+    FD
+  ).then((result: any) => {
+    console.log(result);
+    onSuccess && onSuccess(result);
+  }).catch((error)=>{
+    console.log(error);
+    onError && onError(error);
+  });
+}
+
+/*
+
+User
+----
+This object represents a Telegram user or bot.
+
+Field                                   Type                                  Description
+-----------------------------------------------------------------------------------------
+id	                                    Integer                               Уникальный идентификатор для этого пользователя или бота. Этот номер может содержать более 32 значащих бит, и в некоторых языках программирования могут возникать трудности с его интерпретацией. Но он содержит не более 52 значащих бит, поэтому 64-разрядное целое число или тип с плавающей точкой двойной точности безопасны для хранения этого идентификатора.
+is_bot                                  Boolean                               True, if this user is a bot
+first_name                              String                                User's or bot's first name
+last_name                               String                                Optional. User's or bot's last name
+username                                String                                Optional. User's or bot's username
+language_code                           String                                Optional. IETF language tag of the user's language
+is_premium                              True                                  Optional. True, if this user is a Telegram Premium user
+added_to_attachment_menu                True                                  Optional. True, if this user added the bot to the attachment menu
+can_join_groups                         Boolean                               Optional. True, if the bot can be invited to groups. Returned only in getMe.
+can_read_all_group_messages             Boolean                               Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
+supports_inline_queries                 Boolean                               Optional. True, if the bot supports inline queries. Returned only in getMe.
+can_connect_to_business                 Boolean                               Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
+has_main_web_app                        Boolean                               Optional. True, if the bot has a main Web App. Returned only in getMe.
+has_topics_enabled                      Boolean                               Optional. True, if the bot has forum topic mode enabled in private chats. Returned only in getMe.
+
+
+Chat
+----
+This object represents a chat.
+
+Field                                   Type                                  Description
+-----------------------------------------------------------------------------------------
+id                                      Integer                               Уникальный идентификатор этого чата. Это число может содержать более 32 значащих бит, и некоторые языки программирования могут испытывать трудности или иметь скрытые дефекты при его интерпретации. Однако оно содержит не более 52 значащих бит, поэтому для хранения этого идентификатора безопасно использовать знаковое 64-битное целое число или число с двойной точностью (double-precision float).
+type                                    String                                Type of the chat, can be either “private”, “group”, “supergroup” or “channel”
+title                                   String                                Optional. Title, for supergroups, channels and group chats
+username                                String                                Optional. Username, for private chats, supergroups and channels if available
+first_name                              String                                Optional. First name of the other party in a private chat
+last_name                               String                                Optional. Last name of the other party in a private chat
+is_forum                                True                                  Optional. True, if the supergroup chat is a forum (has topics enabled)
+is_direct_messages                      True                                  Optional. True, if the chat is the direct messages chat of a channel
+
+
+ChatFullInfo
+------------
+This object contains full information about a chat.
+
+Field                                   Type                                  Description
+-----------------------------------------------------------------------------------------
+id                                      Integer                               Уникальный идентификатор этого чата. Это число может содержать более 32 значащих бит, и некоторые языки программирования могут испытывать трудности или иметь скрытые дефекты при его интерпретации. Однако оно содержит не более 52 значащих бит, поэтому для хранения этого идентификатора безопасно использовать знаковое 64-битное целое число или число с двойной точностью (double-precision float).
+type                                    String                                Type of the chat, can be either “private”, “group”, “supergroup” or “channel”
+title                                   String                                Optional. Title, for supergroups, channels and group chats
+username                                String                                Optional. Username, for private chats, supergroups and channels if available
+first_name                              String                                Optional. First name of the other party in a private chat
+last_name                               String                                Optional. Last name of the other party in a private chat
+is_forum                                True                                  Optional. True, if the supergroup chat is a forum (has topics enabled)
+is_direct_messages                      True                                  Optional. True, if the chat is the direct messages chat of a channel
+accent_color_id                         Integer                               Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details.
+max_reaction_count                      Integer                               The maximum number of reactions that can be set on a message in the chat
+photo                                   ChatPhoto                             Optional. Chat photo
+active_usernames                        Array of String                       Optional. If non-empty, the list of all active chat usernames; for private chats, supergroups and channels
+birthdate                               Birthdate                             Optional. For private chats, the date of birth of the user
+business_intro                          BusinessIntro                         Optional. For private chats with business accounts, the intro of the business
+business_location                       BusinessLocation                      Optional. For private chats with business accounts, the location of the business
+business_opening_hours                  BusinessOpeningHours                  Optional. For private chats with business accounts, the opening hours of the business
+personal_chat                           Chat                                  Optional. For private chats, the personal channel of the user
+parent_chat                             Chat                                  Optional. Information about the corresponding channel chat; for direct messages chats only
+available_reactions                     Array of ReactionType                 Optional. List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed.
+background_custom_emoji_id              String                                Optional. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background
+profile_accent_color_id                 Integer                               Optional. Identifier of the accent color for the chat's profile background. See profile accent colors for more details.
+profile_background_custom_emoji_id      String                                Optional. Custom emoji identifier of the emoji chosen by the chat for its profile background
+emoji_status_custom_emoji_id            String                                Optional. Custom emoji identifier of the emoji status of the chat or the other party in a private chat
+emoji_status_expiration_date            Integer                               Optional. Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any
+bio                                     String                                Optional. Bio of the other party in a private chat
+has_private_forwards                    True                                  Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user
+has_restricted_voice_and_video_messages True                                  Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat
+join_to_send_messages                   True                                  Optional. True, if users need to join the supergroup before they can send messages
+join_by_request                         True                                  Optional. True, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators
+description                             String                                Optional. Description, for groups, supergroups and channel chats
+invite_link                             String                                Optional. Primary invite link, for groups, supergroups and channel chats
+pinned_message                          Message                               Optional. The most recent pinned message (by sending date)
+permissions                             ChatPermissions                       Optional. Default chat member permissions, for groups and supergroups
+accepted_gift_types                     AcceptedGiftTypes                     Information about types of gifts that are accepted by the chat or by the corresponding user for private chats
+can_send_paid_media                     True                                  Optional. True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.
+slow_mode_delay                         Integer                               Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds
+unrestrict_boost_count                  Integer                               Optional. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions
+message_auto_delete_time                Integer                               Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds
+has_aggressive_anti_spam_enabled        True                                  Optional. True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.
+has_hidden_members                      True                                  Optional. True, if non-administrators can only get the list of bots and administrators in the chat
+has_protected_content                   True                                  Optional. True, if messages from the chat can't be forwarded to other chats
+has_visible_history                     True                                  Optional. True, if new chat members will have access to old messages; available only to chat administrators
+sticker_set_name                        String                                Optional. For supergroups, name of the group sticker set
+can_set_sticker_set                     True                                  Optional. True, if the bot can change the group sticker set
+custom_emoji_sticker_set_name           String                                Optional. For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.
+linked_chat_id                          Integer                               Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+location                                ChatLocation                          Optional. For supergroups, the location to which the supergroup is connected
+rating                                  UserRating                            Optional. For private chats, the rating of the user if any
+unique_gift_colors                      UniqueGiftColors                      Optional. The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
+paid_message_star_count                 Integer                               Optional. The number of Telegram Stars a general user have to pay to send a message to the chat
+
+*/
+
+/*
+Field                                   Type                                  Description
+-----------------------------------------------------------------------------------------
+id: 7463937011                          Integer                               Уникальный идентификатор этого чата. Это число может содержать более 32 значащих бит, и некоторые языки программирования могут испытывать трудности или иметь скрытые дефекты при его интерпретации. Однако оно содержит не более 52 значащих бит, поэтому для хранения этого идентификатора безопасно использовать знаковое 64-битное целое число или число с двойной точностью (double-precision float).
+first_name: Casebook                    String                                Имя пользователя или бота.
+last_name: Killer                       String                                Необязательно. Фамилия пользователя или бота.
+username: casebook_killer               String                                Необязательно. Имя пользователя или бота (никнейм).
+type: private                           String                                Тип чата может быть “private”, “group”, “supergroup” или “channel”
+can_send_gift: true
+active_usernames: [                     Array of String                       Необязательно. Если список не пуст, то это перечень всех активных имён пользователей чата; для личных чатов, супергрупп и каналов.
+  casebook_killer
+]
+accepted_gift_types: {                  AcceptedGiftTypes                     Информация о типах подарков, которые принимаются в чате или соответствующим пользователем в личных чатах.
+  unlimited_gifts: true
+  limited_gifts: true
+  unique_gifts: true
+  premium_subscription: true
+  gifts_from_channels: true
+},
+photo: {                                ChatPhoto                             Необязательно. Фото чата или пользвателя
+  small_file_id: AQADAgADUuUxG-PqEEsACAIAA_Oj4rwBAAPDODjg9dGT2jgE
+  small_file_unique_id: AQADUuUxG-PqEEsAAQ
+  big_file_id: AQADAgADUuUxG-PqEEsACAMAA_Oj4rwBAAPDODjg9dGT2jgE
+  big_file_unique_id: AQADUuUxG-PqEEsB
+},
+emoji_status_custom_emoji_id:           String                                Необязательно. Уникальный идентификатор кастомного эмодзи, отображающего статус чата или собеседника в личном чате.
+  5206318837489743801
+max_reaction_count: 11                  Integer                               Максимальное количество реакций, которое можно установить на сообщение в чате.
+accent_color_id: 6                      Integer                               Идентификатор цвета акцента для названия чата и фона фотографии в чате, заголовка ответа и предварительного просмотра ссылки. Более подробную информацию смотрите в разделе Цвета акцента.
+
+*/
